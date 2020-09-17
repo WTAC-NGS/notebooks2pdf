@@ -19,7 +19,5 @@ addons:
   - texlive-latex-base
 before_script:
  - pip install jupyter
-#- pip install bash_kernel
-#- python -m bash_kernel.install 
 script:
-- pushd test_data && ../make_course_pdf.py --no_exec test test.ipynb && popd
+- pushd test_data && ../make_course_pdf.py --no_exec test test.ipynb && popd && exit 0

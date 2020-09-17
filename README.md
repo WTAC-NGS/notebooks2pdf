@@ -1,6 +1,6 @@
 # notebooks2pdf
 
-This directory contains a number of scripts that can be used to convert Jupyter Notebooks to PDF. Before To increase sucess that this script will sucessfully convert the notebook to pdf please make sure that it conforms to the style guide in `Guide_for_notebooks`.
+This directory contains a number of scripts that can be used to convert Jupyter Notebooks to PDF. Before To increase sucess that this script will sucessfully convert the notebook to pdf please make sure that it conforms to the style guide in `styleguide.md`.
 
 ## Usage
 Make sure that your version of MacTeX (in particular lualatex) is up to date.  

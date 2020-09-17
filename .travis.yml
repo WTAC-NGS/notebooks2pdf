@@ -1,0 +1,11 @@
+dist: xenial
+language: python
+python: 3.7
+sudo:
+- false
+addons
+ apt:
+  packages:
+  - pandoc
+script:
+- pushd test_data && ../make_course_pdf.py --no_exec test test.ipynb && popd

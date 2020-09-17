@@ -29,7 +29,7 @@ class Ipynb_to_tex_converter:
 
 
     def _nbconvert_to_tex(self, infile, outfile):
-        # on xenial, the --output foo puts foo in the same directory
+        # on xenial, the --output foo puts foo in the same directory
         # as the infile, so use absolute path
         outfile = os.path.abspath(outfile)
 
@@ -51,50 +51,27 @@ class Ipynb_to_tex_converter:
     #        if lines[i] == r'''    \begin{Verbatim}[commandchars=\\\{\}]''':
     #            lines[i] = r'''    \begin{Verbatim}[obeytabs,commandchars=\\\{\}]'''
 
+
+
     def _remove_useless_first_lines(self, lines):
         while len(lines) and not lines[0].startswith(r'''\documentclass'''):
             lines.pop(0)
 
 
-    #def _fix_figures(self, lines):
-    #    for i in range(len(lines)):
-    #        if lines[i].startswith(r'''\begin{figure}'''):
-    #           assert lines[i+2].startswith(r'''\includegraphics''')
-    #           assert lines[i+3].startswith(r'''\caption''')
-    #           assert lines[i+4] == r'''\end{figure}'''
-    #           graphics_string = lines[i+3].split('{')[-1][:-1]
-    #           lines[i] = ''
-    #           lines[i+1] = r'''\begin{center}'''
-    #           lines[i+2] = lines[i+2].split('{')[-1][:-1]
-    #           lines[i+2] = r'''\includegraphics[''' + graphics_string + ']{' + lines[i+2] + '}'
-    #           lines[i+3] = r'''\end{center}'''
-    #           lines[i+4] = ''
-
-    def _set_figure_maxheight(self, lines):
+    def _fix_figures(self, lines):
         for i in range(len(lines)):
-            if "\\renewcommand{\includegraphics}" in lines[i]:
-                lines[i] = str("\\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth, height=.55\\textheight, keepaspectratio]{#1}}")
+            if lines[i].startswith(r'''\begin{figure}'''):
+               assert lines[i+2].startswith(r'''\includegraphics''')
+               assert lines[i+3].startswith(r'''\caption''')
+               assert lines[i+4] == r'''\end{figure}'''
+               graphics_string = lines[i+3].split('{')[-1][:-1]
+               lines[i] = ''
+               lines[i+1] = r'''\begin{center}'''
+               lines[i+2] = lines[i+2].split('{')[-1][:-1]
+               lines[i+2] = r'''\includegraphics[''' + graphics_string + ']{' + lines[i+2] + '}'
+               lines[i+3] = r'''\end{center}'''
+               lines[i+4] = ''
 
-    def _fix_figure_position(self, lines):
-        for i in range(len(lines)):
-            if "\\begin{figure}" in lines[i]:
-                lines[i] += str("[!h]")
-
-    def _fix_table_style(self, lines):
-        lines.insert(1, r'''\renewcommand{\arraystretch}{1.5} % Default value: 1''')
-        for i in range(len(lines)):
-            longtable_rules = ['toprule', 'midrule', 'bottomrule']
-            if any(s in lines[i] for s in longtable_rules):
-                lines[i] = "\\hline"   
-
-    def _set_bold_caption_style(self, lines):
-        import pprint
-        pp = pprint.PrettyPrinter(indent=4)
-        for i in range(len(lines)):
-            if "\\captionsetup" in lines[i]:
-                pp.pprint(lines[i])
-                lines[i] = str("    \\captionsetup{labelformat=nolabel, textfont=bf}")
-                pp.pprint(lines[i])
 
     def _fix_terminal_style(self, lines):
         lines.insert(1, r'''\usepackage{listings}
@@ -130,12 +107,7 @@ postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}
                 if lines[i+1].startswith(r'''{\color{incolor}In '''):
                     lines[i] = '\n'.join([r'''\begin{terminalinput}''', r'''\begin{Verbatim}[commandchars=\\\{\}]'''])
                     cmd = lines[i+1].split(' ', maxsplit=2)[-1]
-                    if cmd.startswith("}]:}"):
-                        cmd = cmd[len("}]:}"):]
                     lines[i+1] = r'''\llap{\color{black}\LARGE\faKeyboardO\hspace{1em}}''' + cmd
-                    import pprint
-                    pp = pprint.PrettyPrinter(indent=4)
-                    pp.pprint(cmd)
                     in_verbatim = True
                     continue
                 else:
@@ -148,7 +120,7 @@ postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}
                     lines[i] = r'''    \end{lstlisting}'''
                     in_lstlisting = False
 
-                    # sometimes there is no output, which would leave a small empty box
+                    # sometimes there is no output, which would leave a small empty box
                     if lines[i-2] == r'''    \begin{lstlisting}''' and lines[i-1] == '':
                         lines[i-1] = '(no output)'
                 else:
@@ -186,6 +158,7 @@ postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}
     def _fix_image_files(self, lines):
         pass
 
+
     # because emph might end up being underline, not italics
     def _change_emph_to_italics(self, lines):
         for i in range(len(lines)):
@@ -213,11 +186,8 @@ postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}
         self._remove_syntax_highlighting(lines)
 
         self._set_section_heading_style(lines)
-        self._set_figure_maxheight(lines)
-        self._fix_figure_position(lines)
+        self._fix_figures(lines)
         self._fix_image_files(lines)
-        self._fix_table_style(lines)
-        self._set_bold_caption_style(lines)
         self._change_emph_to_italics(lines)
 
         with open(self.outfile, 'w') as f:

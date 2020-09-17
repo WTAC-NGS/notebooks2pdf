@@ -50,4 +50,3 @@ print('Cleaning files:', *to_delete)
 
 for filename in to_delete:
     os.unlink(filename)
-

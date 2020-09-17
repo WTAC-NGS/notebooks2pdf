@@ -7,8 +7,8 @@ addons:
  apt:
   packages:
   - pandoc
- - fonts-lmodern
- - texlive-xetex
+  - fonts-lmodern
+  - texlive-xetex
   - texlive-base
   - texlive-luatex
   - texlive-fonts-recommended

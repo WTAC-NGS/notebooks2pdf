@@ -1,7 +1,7 @@
+# notebooks2pdf
+
 [![Build Status](https://travis-ci.org/ngs-training/notebooks2pdf.svg?branch=master)](https://travis-ci.org/ngs-training/notebooks2pdf)   
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-brightgreen.svg)](https://github.com/ngs-training/notebooks2pdf/blob/master/LICENSE)
-
-# notebooks2pdf
 
 This directory contains a number of scripts that can be used to convert Jupyter Notebooks to PDF. To increase sucess that this script will sucessfully convert the notebook to pdf please make sure that it conforms to the style guide in `styleguide.md`.
 

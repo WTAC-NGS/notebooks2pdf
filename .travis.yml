@@ -17,8 +17,8 @@ addons:
   - texlive-latex-extra
   - texlive-latex-recommended
   - texlive-latex-base
-#before_script:
-- pip install jupyter
+before_script:
+ - pip install jupyter
 #- pip install bash_kernel
 #- python -m bash_kernel.install 
 script:

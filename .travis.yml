@@ -22,4 +22,4 @@ addons:
 #- pip install bash_kernel
 #- python -m bash_kernel.install 
 script:
-- pushd Admin_scripts/test_data && ../make_course_pdf.py --no_exec test test.ipynb && popd
+- pushd test_data && ../make_course_pdf.py --no_exec test test.ipynb && popd

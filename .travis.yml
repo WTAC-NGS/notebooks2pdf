@@ -1,11 +1,25 @@
 dist: xenial
 language: python
 python: 3.7
-sudo:
+sudo: 
 - false
-addons
+addons:
  apt:
   packages:
   - pandoc
+# - fonts-lmodern
+# - texlive-xetex
+#  - texlive-base
+#  - texlive-luatex
+#  - texlive-fonts-recommended
+#  - texlive-fonts-extra
+#  - texlive-generic-recommended
+#  - texlive-latex-extra
+#  - texlive-latex-recommended
+#  - texlive-latex-base
+#before_script:
+#- pip install jupyter
+#- pip install bash_kernel
+#- python -m bash_kernel.install 
 script:
-- pushd test_data && ../make_course_pdf.py --no_exec test test.ipynb && popd
+- pushd Admin_scripts/test_data && ../make_course_pdf.py --no_exec test test.ipynb && popd

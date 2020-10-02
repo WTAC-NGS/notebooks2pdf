@@ -1,5 +1,5 @@
 # Style guide for Jupyter training notebooks
-This document contains some guidelines for creating a new Jupyter training notbook so that is is compatible wth the notebooks2pdf script. 
+This document contains some guidelines for creating a new Jupyter training notebook so that is is compatible wth the notebooks2pdf script. 
 
 * Put all notebook files for a tutorial in a single directory, and not in subdirectories.
 * For figures, make a subdirectory called "img" or similar and put all images there.

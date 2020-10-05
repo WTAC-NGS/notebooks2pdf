@@ -25,6 +25,8 @@ Run lualatex to convert the .tex file to PDF.
 
 `lualatex outputprefix.tex` 
 
+Run lualatex again to ensure your PDF has a table of contents.
+
 ## Hints
 * If an image wraps over a new page, it can cause blank spaces and unusual formatting. To get around it, put a /newpage line in the .tex file before the image.
 * If you get errors about \faKeyboardO, make sure your version of mactex/texlive is up to date (for travis, this meant running tests in xenial).

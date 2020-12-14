@@ -19,7 +19,7 @@ In the notebook directory that you wish to convert, run:
 
 Edit the .tex that was generated so that it looks ok (for instance by adding page breaks, checking that text wrapping in command blocks don't exceed page width, and fixing image positions).
 
-If you want to add the keyboard icon to the boxes containing the prompt/commands, replace '\llap{{\color{#2}\[#3\]' with 'color{black}\LARGE\faKeyboardO' in the .tex file.
+If you want to add the keyboard icon to the boxes containing the prompt/commands, replace '\llap{{\color{#2}\[#3\]' with '\llap{{\color{black}\LARGE\faKeyboardO' in the .tex file.
 
 Run lualatex to convert the .tex file to PDF.
 
